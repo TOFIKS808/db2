@@ -1,0 +1,22 @@
+networks:
+  default:
+    name: ${PROJECT_NAME}
+    ipam:
+      config:
+        - subnet: ${SUBNET}
+
+services:
+  db2:
+    build: docker
+    container_name: "${PROJECT_NAME}_db2"
+    privileged: true
+    ports:
+      - "${LOCALHOST_PORT}:50000"
+    environment:
+      - LICENSE=accept
+      - DB2INST1_PASSWORD=${DB2INST1_PASSWORD}
+      - DBNAME=${DBNAME}
+      - SAMPLEDB=true
+    volumes:
+      - ${VOLUMES_DIR}/backup:/backup
+      - ${VOLUMES_DIR}/data:/database
