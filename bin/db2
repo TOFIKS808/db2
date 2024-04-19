@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+usage() {
+  echo "*********************************************"
+  echo "* Usage:                                    *"
+  echo "*    required params <command> <db_name>    *"
+  echo "*                                           *"
+  echo "*    supported commands:                    *"
+  echo "*     create                                *"
+  echo "*     drop                                  *"
+  echo "*********************************************"
+  exit
+}
+
+if [[ $# -lt 2 ]]
+  then
+    usage
+fi
+
+command=${1}
+name=${2}
+
+if [[ "${command}" == 'create' ]]
+  then
+    echo "create ${name}"
+    docker-compose exec --user db2inst1 db2 bash -c "source ~/.bashrc && db2 create db ${name}"
+elif [[ "${command}" == 'drop' ]]
+  then
+    echo "drop ${name}"
+    docker-compose exec --user db2inst1 db2 bash -c "source ~/.bashrc && db2 drop db ${name}"
+else
+  usage
+fi
+
