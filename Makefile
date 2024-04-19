@@ -4,7 +4,7 @@ up::
 	sudo chmod 777 volumes/data
 	sudo chmod 777 volumes/backup
 	$(MAKE) down || true
-	docker-compose up
+	docker-compose up -d
 PHONY: up
 
 enter::
@@ -20,3 +20,6 @@ build::
 	docker-compose rm -f || true
 	docker-compose up --build -d
 .PHONY: build
+
+logs::
+	docker-compose logs -f
